@@ -1,4 +1,0 @@
-twittergrab
-===========
-
-Projekt Drupal
