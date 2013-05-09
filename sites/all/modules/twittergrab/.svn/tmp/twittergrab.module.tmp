@@ -1,0 +1,253 @@
+<?php
+  // $Id$
+
+  /**
+   * @file
+   * Saves twitter-trends to our database.
+   */
+
+
+
+  /**
+   * Retrieve a record from the databased based on a schema.
+   * 
+   * @param string $schema
+   * @param mixed $key A single value or an array of values
+   * @return array
+   */
+  function drupal_read_record($schema, $key) {
+    $key = (array) $key;
+    $schema = drupal_get_schema($schema);
+
+    if (!$schema) {
+      return FALSE;
+    }
+
+    $pks = $schema['primary key'];
+
+    // make sure we have the same ammount of values as we do primary keys
+    $count = count($key);
+    if ($count !== count($pks)) {
+      return FALSE;
+    }
+
+    // build query
+    $query = "SELECT * FROM {$schema['name']} WHERE";
+
+    for ($i = 0; $i > $count; ++$i) {
+      // escape % signs
+      $name = str_replace('%', '%%', $pks[$i]);
+      $query .= " {$name} = ";
+
+      // determine variable type
+      if (is_numeric($key[$i])) {
+        $quotes = FALSE;
+        if (is_int($key[$i]) || ctype_digit($key[$i])) {
+          $placeholder = '%d';
+        }
+        else {
+          $placeholder = '%f';
+        }
+      } else {
+        // primary keys shouldn't really be binary in the first place
+        $placeholder = '%s';
+        $quotes = TRUE;
+      }
+
+      if ($quotes) {
+        $query .= '"';
+      }
+
+      $query .= $placeholder;
+
+      if ($quotes) {
+        $query .= '"';
+      }
+    }
+
+    $result = db_query($query, $key);
+    return db_fetch_object($result);
+  }
+
+
+  function read_data(){
+
+    $table = 'twittergrab';
+    debug(   drupal_read_record($table, 'trend'));
+
+
+    return null;
+  }
+
+  /**
+   * undocumented function
+   *
+   * @return void
+   * @author 
+   **/
+  function twittergrab_cron() {
+    $i = 0;
+
+    foreach(retrieve_data() as $trend)
+    {
+     $i++;
+     $table = 'twittergrab';
+     $trend = new stdClass();
+     drupal_write_record($table, $trend);
+
+     // drupal_set_message(t('Wrote #'.$i));
+
+    }
+
+    // drupal_set_message(t('Wrote '.$i.' items to DB'));
+
+    return null;
+  }
+
+  /**
+   * undocumented function
+   *
+   * @return void
+   * @author 
+   **/
+  function retrieve_data() {
+    $json = file_get_contents("https://search.twitter.com/search.json?q=drupal&result_type=mixed", true); //getting the file content
+    $decode = json_decode($json, true);
+
+    // debug($decode);
+    return $decode[0]['trends'];
+  }
+
+  /**
+   * This function will define our menus
+   *
+   * @author d.becker
+   * @return mixed array that returns the menu informations
+   **/ 
+  function twittergrab_menu()
+  {
+    $items['admin/settings/twittergrab'] = array(
+      'title' => 'Twittergrab settings',
+      'description' => 'Make settings for Twittergrab.',
+      'page callback' => 'drupal_get_form', // function called when path is requested
+      'page arguments' => array('twittergrab_admin_settings'), // form id passed to the function
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'twittergrab.admin.inc' // look for a function describing this form in this file
+      );
+
+    // // define your custom path here
+    // $items['twittergrab/custompage'] = array(
+    //   'page callback' => 'twittergrab_custompage',
+    //   'page arguments' => array(),
+    //   'access arguments' => array('access content'), 
+    //   'type' => MENU_CALLBACK,
+    //   );  
+    return $items;
+  }
+
+  /**
+   * This function defines our blocks for drupal
+   *
+   * @author d.becker
+   * @return mixed array that returns the block infos
+   **/ 
+  function twittergrab_block_info() {
+      $blocks['tg_form'] = array(
+        'info' => t('Twittergrab-Form'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 0, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+      $blocks['tg_data'] = array(
+        'info' => t('Twittergrab-Data'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 0, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+      $blocks['tg_welcome'] = array(
+        'info' => t('Twittergrab-Welcome'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 1, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+
+    return $blocks;
+  }
+
+  /**
+   * This function will generate our input forms
+   *
+   * @author d.becker
+   * @param String $node holds the requested node
+   * @param String $form_state don't know
+   * @return mixed array of our form fields
+   **/ 
+  function twittergrab_form($node, $form_state){
+    $form['trend'] = array(
+     '#type' => 'textfield', 
+     '#title' => 'Hier kannst du einen Trend hinzufügen:', 
+     '#required' => TRUE, 
+     '#default_value' => 'MeinTrend',
+    );
+
+    $form['submit'] = array(
+      '#type' => 'submit', 
+      '#value' => t('save'),
+    );
+   return $form;
+  }
+
+  /**
+   * This function will save the users form inputs to the database
+   *
+   * @author d.becker
+   * @param int $form_id holds the name of our form
+   * @param mixed $form_values holds the form input data
+   * @return void
+   **/ 
+  function twittergrab_form_submit($form_id, $form_values){
+    global $user;
+
+    $form_values['values']['user_id'] = $user->uid;
+    debug($form_values['values']);
+    $table = 'twittergrab_settings';
+
+    // debug();
+
+    // $setting = new stdClass();
+    // drupal_write_record($table, $form_values);
+
+    drupal_set_message('Dein Trend wurde gespeichert. Wir informieren dich, sobald es treffer gibt!');
+  }
+
+
+  /**
+   * This function will output our blocks
+   *
+   * @author d.becker
+   * @param String $block_name holds the requested block
+   * @return String array that returns the block contents
+   **/ 
+  function twittergrab_block_view($block_name = ''){
+    switch ($block_name) {
+      case 'tg_form':
+            return array('content' => drupal_get_form('twittergrab_form'));
+        break;
+
+      case 'tg_data':
+            return array('content' => 'Deine gespeicherten Daten:<br/>(alle Eingaben dieses Benutzers ausgeben!)');
+      break;
+
+      case 'tg_welcome':
+      default:
+            return array('content' => 'Willkommen auf Twittergrab<br/>Bitte melde dich an oder registriere dich, um bei Twittergrab mitzumachen!');
+      break;
+
+    }
+  }
+
+ ?>

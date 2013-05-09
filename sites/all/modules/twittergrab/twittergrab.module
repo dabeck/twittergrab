@@ -1,0 +1,682 @@
+<?php
+  // $Id$
+
+  /**
+   * Set to 1 if you want debug output or 0 otherwise
+   */
+  define('DEBUG', 0);
+
+
+  /**
+   * hook_cron function will be called everytime the cronjob runs
+   *
+   * @return void
+   **/
+  function twittergrab_cron() {
+
+    // START: Catch tweets from twitter!!
+    save_matches();
+    // END: Catch tweets from twitter!!
+
+
+    // START: Send notification to user and delete fetches!
+    $users = db_query("SELECT DISTINCT user_id FROM {twittergrab_trends} WHERE 1")->fetchAll();
+
+    foreach ($users as $user) {
+      $notify = variable_get("twittergrab_notify_$user->user_id", 1);
+      $interval = variable_get("twittergrab_interval_$user->user_id", 0); // 1 = 24h
+      $delrecords = variable_get("twittergrab_delrecords_$user->user_id", 0);
+      $lastnotification = variable_get("twittergrab_lastnotification_$user->user_id", 0);
+
+      //benachrichtigung ausgeschaltet?
+      if($notify != 1) {
+        continue;
+      }
+
+      //Benachrichtigung nur alle 24h?
+      if($interval == 1 && time() < $lastnotification + 86400) {
+        continue;
+      }
+
+      //benutzer benachrichtigen
+      notify_user($user->user_id);
+
+      variable_set("twittergrab_lastnotification_$user->user_id", time());
+
+      //einträge löschen
+      if($delrecords == 1) {
+        delete_user_matches($user->user_id);
+      }
+
+    }
+    // END: Send notification to user and delete fetches!
+
+
+    return null;
+  }
+
+  /**
+   * Notify users by email
+   *
+   * @return boolean
+   **/
+  function notify_user($user_id = null) {
+    global $user;
+
+    $tmp_user = user_load($user_id);
+    $to = $tmp_user->mail;
+
+    $from = 'twittergrab@ed01.de';
+
+    $message = drupal_mail('fetch', 'notification', $to, 
+      user_preferred_language($tmp_user), array(
+        'body' => array(
+          'username' => $tmp_user->name,
+          'userid' => $user_id
+          ),
+        'subject' => '',
+        'headers' => '',
+        ), $from, TRUE
+      );
+  }
+
+  /**
+   * save matches from twitter to the database
+   *
+   * @return void
+   **/
+  function save_matches() {
+    $trends = get_all_trends();
+
+    $table = 'twittergrab';
+
+    foreach ($trends as $id => $trend) {
+      $data[$id] = retrieve_data($trend);
+    }
+
+    foreach ($data as $trend_id => $trend_data) {
+
+      foreach ($trend_data as $data_id => $value) {
+      
+        $record = array (
+          "trend_id" => $trend_id,
+          "created_at" => $value['created_at'],
+          "from_user" => $value['from_user'],
+          "from_user_name" => $value['from_user_name'],
+          "iso_language_code" => $value['iso_language_code'],
+          "profile_image_url" => $value['profile_image_url'],
+          "text" => strval($value['text'])
+        );
+
+        drupal_write_record ($table, $record);
+      }
+    }
+  }
+
+
+  /**
+   * Build mail content called by drupal_mail function
+   *
+   *
+   * @param String $key message type (currently only 'notification' available)
+   * @param String &$message The actual message
+   * @param String $params Message parameters (Optional)
+   *
+   * @return void
+   **/
+  function fetch_mail($key, &$message, $params) {
+    switch ($key) {
+      case 'notification':
+        $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+        $message['subject'] = 'Twittergrab Benachrichtigung';
+        $message['body'][] = '<html><head><style type="text/css">
+                            body {
+                              margin: 0;
+                            }
+                            a {
+                              color: #A2C268;
+                            }
+                            .header {
+                              height: 230px;
+                              padding: 10px;
+                              color: #fff;
+                              font-weight: bold;
+                              font-size: 14px;
+                              background-color: #48a9e4;
+                              background-image: -moz-linear-gradient(top, #0779bf 0%, #48a9e4 100%);
+                              background-image: -ms-linear-gradient(top, #0779bf 0%, #48a9e4 100%);
+                              background-image: -o-linear-gradient(top, #0779bf 0%, #48a9e4 100%);
+                              background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #0779bf), color-stop(1, #48a9e4));
+                              background-image: -webkit-linear-gradient(top, #0779bf 0%, #48a9e4 100%);
+                              background-image: linear-gradient(top, #0779bf 0%, #48a9e4 100%);
+                            }
+                            table {
+                               border: 0;
+                               border-spacing: 0;
+                               font-size: 0.857em;
+                               margin: 10px 0;
+                               width: 100%;
+                            }
+                              table table {
+                              font-size: 1em;
+                            }
+                            #footer-wrapper table {
+                             font-size: 1em;
+                            }
+                            table tr th {
+                              background: #757575;
+                              background: rgba(0, 0, 0, 0.51);
+                              border-bottom-style: none;
+                            }
+                            table tr th,
+                            table tr th a,
+                            table tr th a:hover {
+                              color: #FFF;
+                              font-weight: bold;
+                            }
+                            table tbody tr th {
+                              vertical-align: top;
+                            }
+                            tr td,
+                            tr th {
+                              padding: 4px 9px;
+                              border: 1px solid #fff;
+                              text-align: left; /* LTR */
+                            }
+                            #footer-wrapper tr td,
+                            #footer-wrapper tr th {
+                             border-color: #555;
+                             border-color: rgba(255, 255, 255, 0.18);
+                            }
+                            tr.odd {
+                              background: #e4e4e4;
+                              background: rgba(0, 0, 0, 0.105);
+                            }
+                            tr,
+                            tr.even {
+                              background: #efefef;
+                              background: rgba(0, 0, 0, 0.063);
+                            }
+                            table ul.links {
+                              margin: 0;
+                              padding: 0;
+                              font-size: 1em;
+                            }
+                            table ul.links li {
+                              padding: 0 1em 0 0;
+                            }</style></head>';
+        $message['body'][] = '<div class="header"><img src="http://klebb.db.informatik.uni-kassel.de/drupal/sites/default/files/twitterGrab_0.png" align="right">
+                              Hallo '.$params['body']['username'].',<br/><br/><br/>hier ist Twittergrab mit den neusten Meldungen zu deinen beobachteten tweets!<br/><br/>
+                              Besuche http://klebb.db.informatik.uni-kassel.de um deine Einstellungen zu ändern oder weitere tweets zu beobachten!</div>';
+        $message['body'][] = build_table($params['body']['userid'], true);
+        $message['body'][] = '</html>';
+        if (isset($params['Cc']))  $message['headers']['Cc']  = $params['Cc'];
+        if (isset($params['Bcc'])) $message['headers']['Bcc'] = $params['Bcc'];
+
+      break;
+
+      default:
+      break;
+  } // switch $key
+
+  }
+
+
+
+  /**
+   * This function will fetch the data from twitters API
+   *
+   * @param String $trend The trend we want to search for
+   * @param String $lang Restricts tweets to the given language, given by an ISO 639-1 code. Default: 'de'
+   *
+   * @return mixed[] array containing the decoded search results
+   **/
+  function retrieve_data($trend = null, $lang = 'de') {
+    $trend = urlencode($trend);
+    $json = file_get_contents("https://search.twitter.com/search.json?q=$trend&result_type=recent&lang=$lang", true); //getting the file content
+    $decode = json_decode($json, true);
+
+    if(DEBUG){
+        debug($decode);
+    }
+
+    return $decode['results'];
+  }
+
+  /**
+   * This function will define our menus
+   *
+   * @return mixed[] array that returns the menu informations
+   **/ 
+  function twittergrab_menu() {
+    $items['tg_matches'] = array(
+      'title' => 'Treffer',
+      'page callback' => 'twittergrab_matches',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+     );
+
+
+    $items['tg_settings'] = array(
+      'title' => 'Einstellungen',
+      'page callback' => 'twittergrab_settings',
+      'access arguments' => array('access content'),
+     );
+
+
+    return $items;
+  }
+
+  /**
+   * The matches page content
+   *
+   * @return string html content
+   **/
+  function twittergrab_matches($args) {
+    global $user, $base_url;
+    $output = '';
+
+    if(DEBUG){
+      debug($args);
+    }
+
+    if($user->uid) {
+
+      if(isset($args) && $args == 'reset') {
+        delete_user_matches($user->uid);
+        drupal_set_message("Deine Treffer wurden zurückgesetzt!");
+      }
+
+      if(isset($args) && $args == 'refresh') {
+        save_matches();
+        drupal_set_message("Deine Treffer wurden aktualisiert!");
+      }
+
+      $output .= " <a href='$base_url/?q=tg_matches/refresh' >aktualisieren</a> | <a href='$base_url/?q=tg_matches/reset' >zurücksetzen</a>";
+
+      $output .= build_table($user->uid);
+
+    } else {
+      drupal_set_message("Du musst angemeldet sein um diese Seite anzuzeigen!", 'warning');
+    }
+
+    return $output;
+  }
+
+
+
+  /**
+   * Build the table to output for emails or on the site itself
+   *
+   * @return string containing the actual table
+   **/
+  function build_table($userId, $notification = false) {
+      $data = get_user_matches($userId, $notification);
+
+      foreach($data as $data_row) {
+        $data_row = get_object_vars($data_row);
+        $row[0]['data'] = filter_xss($data_row['trend']);
+        $row[1]['data'] = date("d.m.Y H:m",strtotime($data_row['created_at'])).' Uhr';
+        $row[2]['data'] = '<img src="'.$data_row['profile_image_url'].'" /><br/>'.$data_row['from_user_name'].' (<a href="http://twitter.com/'.$data_row['from_user'].'" target="_blank">@'.$data_row['from_user'].'</a>)';
+        $row[2]['style'] = 'text-align:center';
+        $row[3]['data'] = $data_row['text'];
+
+        $rows[] = $row;
+      }
+
+      if(!isset($rows)){
+        $rows[][] = array('data' => 'keine Treffer', 'colspan' => 4);
+      }
+
+      $header = array(array('data' => 'Mein Trend'), array('data' => 'Datum'), array('data' => 'Twitternutzer'), array('data' => 'Tweet'));
+
+      $output = theme('table', array('header' => $header, 'rows' => $rows ));
+
+      return $output;
+  }
+
+
+  /**
+   * Settings page content
+   *
+   * return string html content
+   */
+  function twittergrab_settings() {
+    global $user;
+
+    if($user->uid) {
+      $output = drupal_get_form('twittergrab_settings_form');
+    } else {
+      $output = '';
+      drupal_set_message("Du musst angemeldet sein um diese Seite anzuzeigen!", 'warning');
+    }
+
+    return $output;
+  }
+
+
+
+  /**
+   * This function defines our blocks for drupal
+   *
+   * @return mixed[] array that returns the block infos
+   **/ 
+  function twittergrab_block_info() {
+      $blocks['tg_form'] = array(
+        'info' => t('Twittergrab-Form'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 0, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+      $blocks['tg_data'] = array(
+        'info' => t('Twittergrab-Data'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 0, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+      $blocks['tg_welcome'] = array(
+        'info' => t('Twittergrab-Welcome'), 
+        'cache' => DRUPAL_NO_CACHE,
+        'weight' => 1, 
+        'status' => 1, 
+        'region' => 'middle',
+      );
+
+    return $blocks;
+  }
+
+  /**
+   * This function will generate our input forms
+   *
+   * @param String $node holds the requested node
+   * @param String $form_state don't know, actually required by drupal
+   *
+   * @return mixed[] array of our form fields
+   **/ 
+  function twittergrab_form($node, $form_state){
+    $form['trend'] = array(
+     '#type' => 'textfield', 
+     '#title' => 'Hier kannst du einen Trend hinzufügen:', 
+     '#required' => TRUE, 
+     '#default_value' => 'MeinTrend',
+    );
+
+    $form['submit'] = array(
+      '#type' => 'submit', 
+      '#value' => 'Speichern',
+    );
+   return $form;
+  }
+
+
+
+  /**
+   * This function will generate our input forms for settings page
+   *
+   * @param String $node holds the requested node
+   * @param String $form_state don't know, actually required by drupal
+   *
+   * @return mixed[] array of our form fields
+   **/ 
+  function twittergrab_settings_form($node, $form_state){
+    global $user;
+
+    $form['notify'] = array(
+     '#type' => 'checkbox', 
+     '#title' => 'E-Mail Benachrichtigung', 
+     '#default_value' => variable_get("twittergrab_notify_$user->uid", 1)
+    );
+    $form['interval'] = array(
+      '#type' => 'select', 
+      '#title' => 'Benachrichtigungsintervall', 
+      '#default_value' => variable_get("twittergrab_interval_$user->uid", 0),
+      '#options' => array(
+        0 => 'sofort', 
+        1 => '24h', 
+      ), 
+    );
+    $form['deleteRecords'] = array(
+     '#type' => 'checkbox', 
+     '#title' => 'Trefferliste nach Benachrichtigung automatisch leeren', 
+     '#default_value' => variable_get("twittergrab_delrecords_$user->uid", 1)
+    );
+    $form['submit'] = array(
+      '#type' => 'submit', 
+      '#value' => 'Speichern',
+    );
+   return $form;
+  }
+
+
+  /**
+   * This function will save the users form inputs to the database
+   *
+   * @param int $form_id holds the name of our form
+   * @param mixed $form_values holds the form input data
+   *
+   * @return void
+   **/ 
+  function twittergrab_form_submit($form_id, $form_values){
+    global $user;
+
+    if(DEBUG) {
+        debug($form_values['values']);
+    }
+
+    $table = 'twittergrab_trends';
+
+    if(in_array($form_values["values"]["trend"],(get_user_trends()))) {
+      drupal_set_message("Du hast den Trend '".$form_values['values']['trend']."' bereits gespeichert! Bitte versuche es mit einem anderen.", 'warning');
+      return true;
+    }
+
+    $record = array (
+      "user_id" => $user->uid,
+      "trend" => $form_values["values"]["trend"],
+      "enabled" => 1,
+    );
+
+    drupal_write_record ($table, $record);
+
+    drupal_set_message('Dein Trend wurde gespeichert. Wir informieren dich, sobald es treffer gibt!');
+  }
+
+
+  /**
+   * This function will save the users settings to the database
+   *
+   * @param int $form_id holds the name of our form
+   * @param mixed $form_values holds the form input data
+   *
+   * @return void
+   **/ 
+  function twittergrab_settings_form_submit($form_id, $form_values){
+    global $user;
+
+    if(DEBUG) {
+        debug($form_values['values']);
+    }
+
+    variable_set("twittergrab_notify_$user->uid", $form_values["values"]["notify"]);
+    variable_set("twittergrab_interval_$user->uid", $form_values["values"]["interval"]);
+    variable_set("twittergrab_delrecords_$user->uid", $form_values["values"]["deleteRecords"]);
+
+    drupal_set_message('Deine Einstellungen wurden gespeichert.');
+  }
+
+  /**
+   * Get all saved trends
+   * 
+   * @return mixed array containing all trends eg.  array(id => string)
+   **/
+  function get_all_trends() {
+    $results = db_query("SELECT id, user_id, trend FROM {twittergrab_trends}");
+    $return = array();
+
+    foreach ($results as $trend) {
+      $return[$trend->id] = $trend->trend;
+    }
+
+    return $return;
+  }
+
+
+  /**
+   * Get all trends saved by the actual logged in user
+   *
+   * @return mixed array containing usertrends eg.  array(id => string)
+   **/
+  function get_user_trends() {
+    global $user;
+
+    $results = db_query("SELECT id, user_id, trend FROM {twittergrab_trends} WHERE user_id = :uid", array(':uid' => $user->uid));
+    $return = array();
+
+    foreach ($results as $trend) {
+      $return[$trend->id] = $trend->trend;
+    }
+
+    return $return;
+  }
+
+
+  /**
+   * Get all matches of a user
+   *
+   * @return mixed array
+   **/
+  function get_user_matches($userId, $notification = false) {
+    $filter = '';
+
+    if($notification == true) {
+      $filter = "AND twittergrab.notified = 0";
+    }
+
+    $results = db_query("SELECT twittergrab.id,
+                                twittergrab.trend_id,
+                                twittergrab.created_at,
+                                twittergrab.from_user,
+                                twittergrab.from_user_name,
+                                twittergrab.profile_image_url,
+                                twittergrab.text,
+                                twittergrab_trends.user_id,
+                                twittergrab_trends.trend
+                        FROM {twittergrab}
+                        INNER JOIN {twittergrab_trends} 
+                        ON twittergrab.trend_id = twittergrab_trends.id
+                        AND twittergrab_trends.user_id = :uid
+                        $filter
+                        ORDER BY STR_TO_DATE(twittergrab.created_at, '%a, %d %b %Y %T') DESC", array(':uid' => $userId))->fetchAll();
+
+    if($notification == true) {
+      db_query("UPDATE {twittergrab}
+                INNER JOIN {twittergrab_trends} 
+                ON twittergrab.trend_id = twittergrab_trends.id
+                AND twittergrab_trends.user_id = :uid
+                AND twittergrab.notified = 0
+                SET twittergrab.notified = 1", array(':uid' => $userId));
+      }
+
+
+    $data = $results;
+
+    return $data;
+  }
+
+  /**
+   * undocumented function
+   *
+   * @param int $userId the Id of the user who's matches should be deleted
+   *
+   * @return boolean true if deleting went well, false otherwise
+   **/
+  function delete_user_matches($userId) {
+    if(isset($userId)) {
+        $results = db_query("DELETE {twittergrab} FROM {twittergrab} 
+                             INNER JOIN {twittergrab_trends} 
+                             WHERE twittergrab.trend_id = twittergrab_trends.id AND twittergrab_trends.user_id = :uid", array(':uid' => $userId));
+        if($results){
+          return true;
+        } else {
+          return false;
+        }
+    } else {
+      return false;
+    }
+  }
+
+
+  /**
+   * Generates a the list of trends of the user
+   *
+   * @return string containing html code to output
+   **/
+  function generate_user_trendlist() {
+    global $user, $base_url;
+    $return = null;
+    $img_path = drupal_get_path('module', 'twittergrab');
+    $sid = $user->sid;
+
+    foreach(get_user_trends() as $id => $trend) {
+      $trend = filter_xss($trend);
+      $return .= "<li>$trend <a href='?deltrend=$id&sid=$sid' style='clear:both;float:right;'><img src='$base_url/$img_path/img/icon_delete.gif' title='löschen' /></a></li>";
+    }
+
+    return $return;
+  }
+
+  /**
+   * delete a specific trend of the actual user
+   *
+   * @param int $id ID of the trend which should be deleted
+   *
+   * @return boolean true if deleting went well or false otherwise
+   **/
+  function delete_user_trend($id) {
+    $trends = get_user_trends();
+
+    if(isset($trends[$id])){
+      db_query("DELETE FROM {twittergrab} WHERE trend_id = :id", array(':id' => $id));
+      db_query("DELETE FROM {twittergrab_trends} WHERE id = :id", array(':id' => $id));
+      return true;
+    } else {
+      drupal_set_message("Der Trend wurde nicht gefunden!", 'warning');
+      return false;
+    }    
+  }
+
+
+  /**
+   * This function will output our blocks
+   *
+   * @param String $block_name holds the requested block
+   *
+   * @return String[] array that returns the block contents
+   **/ 
+  function twittergrab_block_view($block_name = ''){
+    global $user;
+
+    switch ($block_name) {
+      case 'tg_form':
+            return array('content' => drupal_get_form('twittergrab_form'));
+        break;
+
+      case 'tg_data':
+            if(isset($_GET['deltrend']) && is_numeric($_GET['deltrend']) && isset($_GET['sid']) && $user->sid == $_GET['sid']) {
+              delete_user_trend($_GET['deltrend']);
+            }
+            $box = array('content' => '<strong>Deine gespeicherten Trends: </strong><ul>'.generate_user_trendlist().'</ul>');
+            return $box;
+      break;
+
+      case 'tg_welcome':
+      default:
+            return array('content' => 'Willkommen auf Twittergrab<br/>Bitte melde dich an oder registriere dich, um bei Twittergrab mitzumachen!');
+      break;
+
+    }
+  }
+
+ ?>

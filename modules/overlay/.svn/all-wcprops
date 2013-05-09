@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/7/modules/overlay
+END
+overlay-parent.css
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/modules/overlay/overlay-parent.css
+END
+overlay.api.php
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/modules/overlay/overlay.api.php
+END
+overlay-parent.js
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/7/modules/overlay/overlay-parent.js
+END
+overlay.module
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/7/modules/overlay/overlay.module
+END
+overlay.tpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/modules/overlay/overlay.tpl.php
+END
+overlay.install
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/modules/overlay/overlay.install
+END
+overlay-child-rtl.css
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/7/modules/overlay/overlay-child-rtl.css
+END
+overlay-child.css
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/7/modules/overlay/overlay-child.css
+END
+overlay.info
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/7/modules/overlay/overlay.info
+END
+overlay-child.js
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/modules/overlay/overlay-child.js
+END

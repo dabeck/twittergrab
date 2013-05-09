@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/modules/file/tests
+END
+file_module_test.module
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/7/modules/file/tests/file_module_test.module
+END
+file.test
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/7/modules/file/tests/file.test
+END
+file_module_test.info
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/7/modules/file/tests/file_module_test.info
+END

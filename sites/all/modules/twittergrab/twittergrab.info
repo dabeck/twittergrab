@@ -1,0 +1,5 @@
+; $Id$
+name = Twittergrab
+description = This Module is used to grab twitter trends.
+core = 7.x
+package = ProjektDrupal

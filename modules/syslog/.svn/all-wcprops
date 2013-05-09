@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/7/modules/syslog
+END
+syslog.module
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/7/modules/syslog/syslog.module
+END
+syslog.install
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/7/modules/syslog/syslog.install
+END
+syslog.info
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/7/modules/syslog/syslog.info
+END
+syslog.test
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/7/modules/syslog/syslog.test
+END

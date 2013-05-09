@@ -1,0 +1,132 @@
+<?php
+
+//$Id$
+
+
+  /**
+   * Function which will create database layout
+   *
+   * @author d.becker
+   * @since 0.1
+   * @todo Must be hook_install later
+   *
+   * @return void
+   **/
+  function twittergrab_install(){
+    drupal_install_schema('twittergrab');
+  }
+
+
+  /**
+   * This function will hold our database model
+   *
+   * @author d.becker
+   * @since 0.1
+   *
+   * @return void
+   **/
+  function twittergrab_schema() {
+    $schema['twittergrab'] = array(
+       'description' => 'The base table for twittergrab', 
+       'fields' => array(
+         'id' => array(
+           'description' => 'The primary identifier for a twitter trend', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => TRUE,
+         ), 
+         'query' => array(
+           'description' => 'The query for twitter', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'name' => array(
+           'description' => 'The name of our trend', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'events' => array(
+           'description' => 'The event of twitter', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => FALSE, 
+           'default' => '',
+         ),
+         'url' => array(
+           'description' => 'The of our trend', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'promoted' => array(
+           'description' => 'Is this a promoted trend?', 
+           'type' => 'int', 
+           'not null' => FALSE, 
+         ),
+         'timestamp' => array(
+         'type' => 'int',
+         'description'  => t('The unix timestamp'),
+         ),
+       ),
+       'primary key' => array('id'),
+     );
+      
+      $schema['twittergrab_settings'] = array(
+        'description' => 'The settings table for twittergrab', 
+        'fields' => array(
+         'id' => array(
+           'description' => 'The primary identifier for a setting', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => TRUE,
+          ),
+<<<<<<< .mine
+          'user_id' => array(
+           'description' => 'The user identifier for a setting', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+          ),
+=======
+          'user_id' => array(
+           'description' => 'The user_id', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => FALSE,
+          ),
+>>>>>>> .r19
+         'key' => array(
+           'description' => 'The key', 
+           'type' => 'varchar',
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+          ),
+         'value' => array(
+           'description' => 'The value', 
+           'type' => 'varchar',
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+          ),
+          'enabled' => array(
+           'description' => 'enabled', 
+           'type' => 'int',
+           'size' => 'tiny', 
+          ),
+         ),
+        'primary key' => array('id'),
+      );
+     return $schema;
+  }
+
+
+?>

@@ -1,0 +1,275 @@
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/svn/!svn/ver/7/includes
+END
+cache-install.inc
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/7/includes/cache-install.inc
+END
+bootstrap.inc
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/7/includes/bootstrap.inc
+END
+date.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/date.inc
+END
+stream_wrappers.inc
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/7/includes/stream_wrappers.inc
+END
+file.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/file.inc
+END
+token.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/token.inc
+END
+mail.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/mail.inc
+END
+update.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/update.inc
+END
+ajax.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/ajax.inc
+END
+session.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/session.inc
+END
+theme.maintenance.inc
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/7/includes/theme.maintenance.inc
+END
+module.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/module.inc
+END
+common.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/common.inc
+END
+iso.inc
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/7/includes/iso.inc
+END
+file.mimetypes.inc
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/7/includes/file.mimetypes.inc
+END
+path.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/path.inc
+END
+actions.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/actions.inc
+END
+password.inc
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/7/includes/password.inc
+END
+theme.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/theme.inc
+END
+form.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/form.inc
+END
+json-encode.inc
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/7/includes/json-encode.inc
+END
+updater.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/updater.inc
+END
+install.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/install.inc
+END
+registry.inc
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/7/includes/registry.inc
+END
+unicode.entities.inc
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/7/includes/unicode.entities.inc
+END
+authorize.inc
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/7/includes/authorize.inc
+END
+entity.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/entity.inc
+END
+errors.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/errors.inc
+END
+batch.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/batch.inc
+END
+image.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/image.inc
+END
+language.inc
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/7/includes/language.inc
+END
+unicode.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/unicode.inc
+END
+lock.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/lock.inc
+END
+xmlrpcs.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/xmlrpcs.inc
+END
+install.core.inc
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/7/includes/install.core.inc
+END
+pager.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/pager.inc
+END
+locale.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/locale.inc
+END
+tablesort.inc
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/7/includes/tablesort.inc
+END
+graph.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/graph.inc
+END
+archiver.inc
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/7/includes/archiver.inc
+END
+cache.inc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/includes/cache.inc
+END
+utility.inc
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/7/includes/utility.inc
+END
+menu.inc
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/includes/menu.inc
+END
+batch.queue.inc
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/7/includes/batch.queue.inc
+END
+xmlrpc.inc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/includes/xmlrpc.inc
+END

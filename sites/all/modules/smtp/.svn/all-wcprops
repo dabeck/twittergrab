@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/21/sites/all/modules/smtp
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/21/sites/all/modules/smtp/LICENSE.txt
+END
+smtp.admin.inc
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.admin.inc
+END
+CHANGELOG.txt
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/21/sites/all/modules/smtp/CHANGELOG.txt
+END
+smtp.transport.inc
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.transport.inc
+END
+smtp.module
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.module
+END
+smtp.install
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.install
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/21/sites/all/modules/smtp/README.txt
+END
+smtp.phpmailer.inc
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.phpmailer.inc
+END
+smtp.mail.inc
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.mail.inc
+END
+smtp.info
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/21/sites/all/modules/smtp/smtp.info
+END

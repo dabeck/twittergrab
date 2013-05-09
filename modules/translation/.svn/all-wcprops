@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/7/modules/translation
+END
+translation.module
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/7/modules/translation/translation.module
+END
+translation.pages.inc
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/7/modules/translation/translation.pages.inc
+END
+translation.info
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/7/modules/translation/translation.info
+END
+translation.test
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/7/modules/translation/translation.test
+END

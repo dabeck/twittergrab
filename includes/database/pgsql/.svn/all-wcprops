@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/7/includes/database/pgsql
+END
+select.inc
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/includes/database/pgsql/select.inc
+END
+schema.inc
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/includes/database/pgsql/schema.inc
+END
+database.inc
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/7/includes/database/pgsql/database.inc
+END
+query.inc
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/7/includes/database/pgsql/query.inc
+END
+install.inc
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/includes/database/pgsql/install.inc
+END

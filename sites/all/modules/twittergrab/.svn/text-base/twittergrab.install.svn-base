@@ -1,0 +1,134 @@
+<?php
+
+//$Id$
+
+
+  /**
+   * Function which will set our blocks to the specific content areas
+   *
+   * @return void
+   **/
+  function twittergrab_install(){
+    //Add blocks to the content areas
+    db_query("INSERT INTO {block} (module, delta, theme, status, region, visibility, pages) VALUES ('twittergrab', 'tg_form', 'bartik', 1, 'content', 1, '<front>')");
+    db_query("INSERT INTO {block_role} (module, delta, rid) VALUES ('twittergrab', 'tg_form', 2)");
+
+    db_query("INSERT INTO {block} (module, delta, theme, status, region, visibility, pages) VALUES ('twittergrab', 'tg_data', 'bartik', 1, 'sidebar_second', 1, '<front>')");
+    db_query("INSERT INTO {block_role} (module, delta, rid) VALUES ('twittergrab', 'tg_data', 2)");
+
+    db_query("INSERT INTO {block} (module, delta, theme, status, region, visibility, pages) VALUES ('twittergrab', 'tg_welcome', 'bartik', 1, 'content', 1, '<front>')");
+    db_query("INSERT INTO {block_role} (module, delta, rid) VALUES ('twittergrab', 'tg_welcome', 1)");
+  }
+
+
+  /**
+   * This function will create our database model
+   *
+   * @return void
+   **/
+  function twittergrab_schema() {
+    $schema['twittergrab'] = array(
+       'description' => 'The base table for twittergrab', 
+       'fields' => array(
+         'id' => array(
+           'description' => 'The primary identifier for a twitter trend', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => TRUE,
+         ), 
+         'trend_id' => array(
+           'description' => 'The related trend id', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => FALSE,
+         ), 
+         'created_at' => array(
+           'description' => 'The time, the tweet was sent', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'from_user' => array(
+           'description' => 'The username of the twitter-user who tweeted', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'from_user_name' => array(
+           'description' => 'The realname of the twitter-user who tweeted', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'iso_language_code' => array(
+           'description' => 'The tweets language-code', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'profile_image_url' => array(
+           'description' => 'The twitterusers profile picture', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'text' => array(
+           'description' => 'The actual tweet', 
+           'type' => 'varchar', 
+           'length' => 255, 
+           'not null' => TRUE, 
+           'default' => '',
+         ),
+         'notified' => array(
+            'description' => 'Was the user already notified?',
+            'type' => 'int',
+            'size' => 'tiny', 
+            'default' => 0,
+          )
+       ),
+       'primary key' => array('id'),
+     );
+      
+      $schema['twittergrab_trends'] = array(
+        'description' => 'The settings table for twittergrab', 
+        'fields' => array(
+         'id' => array(
+           'description' => 'The primary identifier for a setting', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => TRUE,
+          ),
+          'user_id' => array(
+           'description' => 'The user_id', 
+           'type' => 'int', 
+           'unsigned' => TRUE, 
+           'not null' => TRUE,
+           'auto_increment' => FALSE,
+          ),
+         'trend' => array(
+           'description' => 'The trend', 
+           'type' => 'varchar',
+           'length' => 255, 
+           'not null' => FALSE, 
+           'default' => null,
+          ),
+          'enabled' => array(
+           'description' => 'enabled', 
+           'type' => 'int',
+           'size' => 'tiny', 
+          ),
+         ),
+        'primary key' => array('id'),
+      );
+     return $schema;
+  }
+
+?>

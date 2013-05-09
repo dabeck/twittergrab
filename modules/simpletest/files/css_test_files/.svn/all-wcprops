@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files
+END
+comment_hacks.css.unoptimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/comment_hacks.css.unoptimized.css
+END
+css_input_with_import.css.unoptimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_with_import.css.unoptimized.css
+END
+comment_hacks.css
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/comment_hacks.css
+END
+import1.css
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/import1.css
+END
+css_input_with_import.css
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_with_import.css
+END
+import2.css
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/import2.css
+END
+css_input_without_import.css.optimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_without_import.css.optimized.css
+END
+css_input_without_import.css.unoptimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_without_import.css.unoptimized.css
+END
+css_input_without_import.css
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_without_import.css
+END
+comment_hacks.css.optimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/comment_hacks.css.optimized.css
+END
+css_input_with_import.css.optimized.css
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/7/modules/simpletest/files/css_test_files/css_input_with_import.css.optimized.css
+END

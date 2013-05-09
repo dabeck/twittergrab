@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/7/includes/filetransfer
+END
+ftp.inc
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/7/includes/filetransfer/ftp.inc
+END
+local.inc
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/includes/filetransfer/local.inc
+END
+ssh.inc
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/7/includes/filetransfer/ssh.inc
+END
+filetransfer.inc
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/7/includes/filetransfer/filetransfer.inc
+END

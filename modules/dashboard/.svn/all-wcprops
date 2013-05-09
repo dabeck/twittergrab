@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/modules/dashboard
+END
+dashboard.info
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/modules/dashboard/dashboard.info
+END
+dashboard.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/7/modules/dashboard/dashboard.js
+END
+dashboard.api.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/modules/dashboard/dashboard.api.php
+END
+dashboard.test
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7/modules/dashboard/dashboard.test
+END
+dashboard.module
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7/modules/dashboard/dashboard.module
+END
+dashboard.install
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/modules/dashboard/dashboard.install
+END
+dashboard-rtl.css
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/7/modules/dashboard/dashboard-rtl.css
+END
+dashboard.css
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7/modules/dashboard/dashboard.css
+END

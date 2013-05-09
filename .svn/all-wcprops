@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 16
+/svn/!svn/ver/19
+END
+web.config
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/7/web.config
+END
+INSTALL.sqlite.txt
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/7/INSTALL.sqlite.txt
+END
+INSTALL.txt
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/7/INSTALL.txt
+END
+robots.txt
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/7/robots.txt
+END
+COPYRIGHT.txt
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/7/COPYRIGHT.txt
+END
+cron.php
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/svn/!svn/ver/7/cron.php
+END
+INSTALL.mysql.txt
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/INSTALL.mysql.txt
+END
+MAINTAINERS.txt
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/7/MAINTAINERS.txt
+END
+xmlrpc.php
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/7/xmlrpc.php
+END
+install.php
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/7/install.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 25
+/svn/!svn/ver/7/index.php
+END
+authorize.php
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/7/authorize.php
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/7/LICENSE.txt
+END
+UPGRADE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/7/UPGRADE.txt
+END
+CHANGELOG.txt
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/7/CHANGELOG.txt
+END
+update.php
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/7/update.php
+END
+INSTALL.pgsql.txt
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/7/INSTALL.pgsql.txt
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/7/README.txt
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/14/.htaccess
+END
